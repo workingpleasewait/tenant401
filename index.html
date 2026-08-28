@@ -212,7 +212,7 @@
       <span>Incorrect code. Check what you received and try again.</span>
     </div>
 
-    <form method="POST" action="/api/login" novalidate>
+    <form method="POST" action="/api/login">
       <div class="field">
         <label for="email">Email address</label>
         <input type="email" id="email" name="email" required
@@ -235,26 +235,34 @@
 </footer>
 
 <script>
-!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}var c=t.createElement("script");c.type="text/javascript",c.crossOrigin="anonymous",c.async=!0,c.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js";var l=t.getElementsByTagName("script")[0];l.parentNode.insertBefore(c,l);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},n="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId setPersonPropertiesForFlags".split(" "),p=0;p<n.length;p++)g(u,n[p]);e._i.push([i,s,a])}e.__SV=1})}(document,window.posthog||[]);
-posthog.init('phc_uY5md7SXOeMdNmMPiDi8rkp14ioLWGViqitHfvWLfhR', {
-  api_host: 'https://us.i.posthog.com',
-  autocapture: false,
-  capture_pageview: false,
-  persistence: 'localStorage+cookie',
-});
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}var c=t.createElement("script");c.type="text/javascript",c.crossOrigin="anonymous",c.async=!0,c.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js";var l=t.getElementsByTagName("script")[0];l.parentNode.insertBefore(c,l);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},n="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId setPersonPropertiesForFlags".split(" "),p=0;p<n.length;p++)g(u,n[p]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+
+var posthogTestMode = new URLSearchParams(location.search).get('is_test') === '1';
+if (!posthogTestMode) {
+  posthog.init('phc_uY5md7SXOeMdNmMPiDi8rkp14ioLWGViqitHfvWLfhR', {
+    api_host: 'https://us.i.posthog.com',
+    autocapture: false,
+    capture_pageview: false,
+    persistence: 'localStorage+cookie',
+  });
+}
 
 (function () {
   var params  = new URLSearchParams(location.search);
-  var isTest  = params.get('is_test') === '1';
+  var isTest  = posthogTestMode;
   var isError = !!params.get('error');
+  function capture(event, properties, options) {
+    if (!isTest) posthog.capture(event, properties, options);
+  }
 
   // Pageview
-  posthog.capture('$pageview', { $current_url: location.href, page: 'gate', is_test: isTest });
+  capture('$pageview', { $current_url: location.href, page: 'gate' });
 
   // gate_failure — arrived here with ?error=1 (server rejected code)
   if (isError) {
-    posthog.capture('gate_failure', { page: 'gate', is_test: isTest });
+    capture('gate_failure', { page: 'gate' });
     document.getElementById('err').classList.add('show');
+    try { sessionStorage.removeItem('t401_gate_submitted'); } catch(e) {}
   }
 
   // Uppercase code input
@@ -265,11 +273,11 @@ posthog.init('phc_uY5md7SXOeMdNmMPiDi8rkp14ioLWGViqitHfvWLfhR', {
     this.setSelectionRange(pos, pos);
   });
 
-  // Capture gate_submitted before POST fires; stash email for playbook identify
+  // Capture the attempt before POST navigation and mark it for one success event.
   document.querySelector('form').addEventListener('submit', function () {
     var email = (document.getElementById('email').value || '').trim().toLowerCase();
-    posthog.capture('gate_submitted', { page: 'gate', has_email: !!email, is_test: isTest });
-    if (email) { try { sessionStorage.setItem('t401_email', email); } catch(e) {} }
+    capture('gate_submitted', { page: 'gate', has_email: !!email }, { transport: 'sendBeacon' });
+    try { sessionStorage.setItem('t401_gate_submitted', '1'); } catch(e) {}
   });
 })();
 </script>

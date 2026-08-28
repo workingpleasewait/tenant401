@@ -15,19 +15,21 @@ A static site that publishes the rent-reduction playbook (English + French) — 
 
 | Path | Purpose |
 |---|---|
-| `index.html` | Main site — landing page + authenticated tenant content |
+| `index.html` | Public access-code gate and anonymous PostHog funnel events |
 | `playbook.html` | The rent-reduction playbook (English + French) |
 | `functions/_middleware.js` | CF Pages middleware — validates `t401_session` cookie on all routes except `/` and `/api/login` |
-| `functions/api/login.js` | Login endpoint — issues signed session cookie |
+| `functions/api/login.js` | Login endpoint — validates access, schedules Brevo work, and issues the signed session cookie |
 
 ## Deploy
 
-Push to `main` → Cloudflare Pages auto-deploys. No build step.
+Cloudflare Pages deploys from `main`. There is no build step; always verify the
+live gate and protected-route redirect after a push.
 
 ## Environment variables (set in CF Pages dashboard)
 
 | Variable | Purpose |
 |---|---|
+| `ACCESS_CODE` | Shared tenant access code |
 | `COOKIE_SECRET` | HMAC signing key for session cookies |
 | `BREVO_API_KEY` | Brevo REST API key for email list enrollment |
 | `BREVO_LIST_ID` | Brevo contact list numeric ID |
@@ -43,4 +45,6 @@ npx wrangler pages dev . --compatibility-date=2024-01-01
 - No build step — edit `index.html` and `playbook.html` directly.
 - Middleware runs on every non-public route; public routes are `/` and `/api/login`.
 - Session cookie name: `t401_session`. Format: `base64(payload).hmac`.
+- Session payloads contain only an expiry timestamp, never the tenant email.
+- PostHog receives anonymous explicit events only; `?is_test=1` suppresses it.
 - Do not commit secrets — all credentials live in the CF Pages dashboard.

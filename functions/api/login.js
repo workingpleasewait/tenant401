@@ -6,31 +6,35 @@
  * 2. On success: enrolls email in Brevo list, sends welcome email, sets session cookie
  * 3. On failure: redirects to /?error=1
  */
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request, env, waitUntil }) {
   const body  = await request.formData();
   const email = (body.get('email') || '').trim().toLowerCase();
   const code  = (body.get('code')  || '').trim().toUpperCase();
   const stored = (env.ACCESS_CODE  || '').trim().toUpperCase();
 
-  if (!email || !code || code !== stored) {
+  if (!isValidEmail(email) || !code || !stored || !(await timingSafeEqual(code, stored))) {
     return Response.redirect(new URL('/?error=1', request.url), 303);
   }
 
-  // Brevo: enroll + send welcome email (parallel, fire-and-forget — never block the user)
+  // Fail closed before starting any external work.
+  if (!env.COOKIE_SECRET) {
+    return new Response('Server configuration error', { status: 500 });
+  }
+
+  // Brevo: enroll + send welcome email in work attached to the request lifetime.
   const listId = parseInt(env.BREVO_LIST_ID || '5', 10);
   if (env.BREVO_API_KEY) {
     const headers = { 'api-key': env.BREVO_API_KEY, 'Content-Type': 'application/json' };
 
-    // Run both calls concurrently; catch all errors silently
-    Promise.allSettled([
+    const brevoWork = Promise.allSettled([
       // 1. Enroll in contact list
-      fetch('https://api.brevo.com/v3/contacts', {
+      brevoRequest('contact enrollment', 'https://api.brevo.com/v3/contacts', {
         method: 'POST',
         headers,
         body: JSON.stringify({ email, listIds: [listId], updateEnabled: true }),
       }),
       // 2. Send welcome email
-      fetch('https://api.brevo.com/v3/smtp/email', {
+      brevoRequest('welcome email', 'https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers,
         body: JSON.stringify({
@@ -46,19 +50,51 @@ export async function onRequestPost({ request, env }) {
           tags: ['tenant401-welcome'],
         }),
       }),
-    ]).catch(() => {});
+    ]).then((results) => {
+      for (const result of results) {
+        if (result.status === 'rejected') console.error(result.reason);
+      }
+    });
+
+    if (typeof waitUntil === 'function') {
+      waitUntil(brevoWork);
+    } else {
+      await brevoWork;
+    }
   }
 
   // Set signed session cookie and redirect to playbook
-  // Guard: COOKIE_SECRET must be set — no fallback, fail hard if missing
-  if (!env.COOKIE_SECRET) {
-    return new Response('Server configuration error', { status: 500 });
-  }
-  const cookie = await buildSessionCookie(email, env.COOKIE_SECRET);
+  const cookie = await buildSessionCookie(env.COOKIE_SECRET);
   return new Response(null, {
     status: 303,
     headers: { Location: '/playbook', 'Set-Cookie': cookie },
   });
+}
+
+function isValidEmail(email) {
+  return email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+async function timingSafeEqual(left, right) {
+  const encoder = new TextEncoder();
+  const [leftHash, rightHash] = await Promise.all([
+    crypto.subtle.digest('SHA-256', encoder.encode(left)),
+    crypto.subtle.digest('SHA-256', encoder.encode(right)),
+  ]);
+  const leftBytes = new Uint8Array(leftHash);
+  const rightBytes = new Uint8Array(rightHash);
+  let mismatch = 0;
+  for (let index = 0; index < leftBytes.length; index += 1) {
+    mismatch |= leftBytes[index] ^ rightBytes[index];
+  }
+  return mismatch === 0;
+}
+
+async function brevoRequest(label, url, options) {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`Brevo ${label} failed with HTTP ${response.status}`);
+  }
 }
 
 // ── Email content ─────────────────────────────────────────────────────────────
@@ -143,9 +179,9 @@ This site is not legal advice.`;
 
 // ── Session cookie ─────────────────────────────────────────────────────────────
 
-async function buildSessionCookie(email, secret) {
+async function buildSessionCookie(secret) {
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const payload = btoa(JSON.stringify({ email, exp: expires.getTime() }));
+  const payload = btoa(JSON.stringify({ exp: expires.getTime() }));
   const sig     = await hmacSign(payload, secret);
   return `t401_session=${payload}.${sig}; Path=/; HttpOnly; Secure; SameSite=Lax; Expires=${expires.toUTCString()}`;
 }
