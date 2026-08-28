@@ -21,40 +21,69 @@ export async function onRequestPost({ request, env, waitUntil }) {
     return new Response('Server configuration error', { status: 500 });
   }
 
-  // Brevo: enroll + send welcome email in work attached to the request lifetime.
+  // Brevo: check for existing contact, then enroll + send welcome email.
   const listId = parseInt(env.BREVO_LIST_ID || '5', 10);
   if (env.BREVO_API_KEY) {
     const headers = { 'api-key': env.BREVO_API_KEY, 'Content-Type': 'application/json' };
 
-    const brevoWork = Promise.allSettled([
-      // 1. Enroll in contact list
-      brevoRequest('contact enrollment', 'https://api.brevo.com/v3/contacts', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ email, listIds: [listId], updateEnabled: true }),
-      }),
-      // 2. Send welcome email
-      brevoRequest('welcome email', 'https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          sender: {
-            name: '205 E 17th St Tenant Resource',
-            email: 'tenants@tenant401.com',
-          },
-          to: [{ email }],
-          replyTo: { email: 'tenants@tenant401.com' },
-          subject: 'You now have access — 205 East 17th Street Tenant Resource',
-          htmlContent: welcomeEmailHtml(email),
-          textContent: welcomeEmailText(email),
-          tags: ['tenant401-welcome'],
+    const brevoWork = (async () => {
+      // Check whether this email is already enrolled in the list.
+      let alreadyEnrolled = false;
+      try {
+        const checkRes = await fetch(
+          `https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`,
+          { method: 'GET', headers }
+        );
+        if (checkRes.ok) {
+          const contact = await checkRes.json();
+          alreadyEnrolled = Array.isArray(contact.listIds) && contact.listIds.includes(listId);
+          console.log(`Brevo contact check: found, enrolled=${alreadyEnrolled}`);
+        } else if (checkRes.status === 404) {
+          console.log('Brevo contact check: not found — new registration');
+        } else {
+          // Unexpected error: fail open so a Brevo outage never blocks access.
+          console.error(`Brevo contact check failed with HTTP ${checkRes.status} — proceeding`);
+        }
+      } catch (err) {
+        // Network error: fail open.
+        console.error('Brevo contact check threw:', err, '— proceeding');
+      }
+
+      if (alreadyEnrolled) {
+        console.log('Brevo: already enrolled — skipping enrollment and welcome email');
+        return;
+      }
+
+      // New registration: enroll and send welcome email.
+      const results = await Promise.allSettled([
+        // 1. Enroll in contact list
+        brevoRequest('contact enrollment', 'https://api.brevo.com/v3/contacts', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ email, listIds: [listId], updateEnabled: true }),
         }),
-      }),
-    ]).then((results) => {
+        // 2. Send welcome email
+        brevoRequest('welcome email', 'https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            sender: {
+              name: '205 E 17th St Tenant Resource',
+              email: 'tenants@tenant401.com',
+            },
+            to: [{ email }],
+            replyTo: { email: 'tenants@tenant401.com' },
+            subject: 'You now have access — 205 East 17th Street Tenant Resource',
+            htmlContent: welcomeEmailHtml(email),
+            textContent: welcomeEmailText(email),
+            tags: ['tenant401-welcome'],
+          }),
+        }),
+      ]);
       for (const result of results) {
         if (result.status === 'rejected') console.error(result.reason);
       }
-    });
+    })();
 
     if (typeof waitUntil === 'function') {
       waitUntil(brevoWork);
@@ -104,14 +133,14 @@ function welcomeEmailHtml(email) {
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>You now have access</title></head>
-<body style="margin:0;padding:0;background:#f5f4f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+<body style="margin:0;padding:0;background:#fafaf8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr><td align="center" style="padding:32px 16px">
 <table width="100%" style="max-width:560px" cellpadding="0" cellspacing="0" border="0">
 
   <!-- Header -->
-  <tr><td style="background:#1a1a2e;border-radius:10px 10px 0 0;padding:28px 32px 24px;text-align:center">
-    <p style="margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8888aa">Brooklyn, NY 11226</p>
+  <tr><td style="background:#c4572b;border-radius:10px 10px 0 0;padding:28px 32px 24px;text-align:center">
+    <p style="margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.75)">Brooklyn, NY 11226</p>
     <h1 style="margin:0;font-size:22px;font-weight:700;color:#ffffff;line-height:1.3">
       205 East 17th Street<br>Tenant Resource
     </h1>
@@ -123,17 +152,18 @@ function welcomeEmailHtml(email) {
       You now have access to the 205 East 17th Street tenant resource site.
     </p>
     <p style="margin:0 0 24px;font-size:15px;color:#444;line-height:1.65">
-      The site contains a step-by-step playbook for filing a rent reduction
-      complaint with DHCR when elevator service is broken or degraded — in
-      both English and French. A tenant at this building used this process
-      and received a formal rent reduction order from DHCR in 2024.
+      The site contains a step-by-step guide for filing a rent reduction
+      complaint with DHCR when elevator service is broken or degraded — covering
+      how to file, what to send, and what to expect from DHCR. A tenant at
+      this building used this process and received a formal rent reduction
+      order from DHCR in 2024 that continues today.
     </p>
 
     <!-- CTA button -->
     <table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px">
-    <tr><td style="background:#1a1a2e;border-radius:6px;text-align:center;padding:14px 28px">
+    <tr><td style="background:#c4572b;border-radius:6px;text-align:center;padding:14px 28px">
       <a href="https://tenant401.com" style="color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;display:block">
-        Open the playbook &rarr;
+        Go to the playbook &rarr;
       </a>
     </td></tr>
     </table>
@@ -146,7 +176,7 @@ function welcomeEmailHtml(email) {
   </td></tr>
 
   <!-- Footer -->
-  <tr><td style="background:#f5f4f0;border:1px solid #e0ddd8;border-top:none;border-radius:0 0 10px 10px;padding:20px 32px;text-align:center">
+  <tr><td style="background:#fafaf8;border:1px solid #e0ddd8;border-top:none;border-radius:0 0 10px 10px;padding:20px 32px;text-align:center">
     <p style="margin:0;font-size:12px;color:#8888aa;line-height:1.6">
       205 East 17th Street &middot; Brooklyn, NY 11226<br>
       This site is not legal advice.
@@ -163,11 +193,13 @@ function welcomeEmailHtml(email) {
 function welcomeEmailText(email) {
   return `You now have access to the 205 East 17th Street tenant resource site.
 
-The site contains a step-by-step playbook for filing a rent reduction
-complaint with DHCR when elevator service is broken or degraded — in
-both English and French.
+The site contains a step-by-step guide for filing a rent reduction
+complaint with DHCR when elevator service is broken or degraded — covering
+how to file, what to send, and what to expect from DHCR. A tenant at this
+building used this process and received a formal rent reduction order from
+DHCR in 2024 that continues today.
 
-Open the playbook: https://tenant401.com
+Go to the playbook: https://tenant401.com
 
 ---
 You were enrolled at ${email}. You may receive occasional updates about
