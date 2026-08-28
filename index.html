@@ -235,17 +235,43 @@
 </footer>
 
 <script>
-  // Show error banner on ?error=1
-  if (new URLSearchParams(location.search).get('error')) {
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}var c=t.createElement("script");c.type="text/javascript",c.crossOrigin="anonymous",c.async=!0,c.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js";var l=t.getElementsByTagName("script")[0];l.parentNode.insertBefore(c,l);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},n="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId setPersonPropertiesForFlags".split(" "),p=0;p<n.length;p++)g(u,n[p]);e._i.push([i,s,a])}e.__SV=1})}(document,window.posthog||[]);
+posthog.init('phc_uY5md7SXOeMdNmMPiDi8rkp14ioLWGViqitHfvWLfhR', {
+  api_host: 'https://us.i.posthog.com',
+  autocapture: false,
+  capture_pageview: false,
+  persistence: 'localStorage+cookie',
+});
+
+(function () {
+  var params  = new URLSearchParams(location.search);
+  var isTest  = params.get('is_test') === '1';
+  var isError = !!params.get('error');
+
+  // Pageview
+  posthog.capture('$pageview', { $current_url: location.href, page: 'gate', is_test: isTest });
+
+  // gate_failure — arrived here with ?error=1 (server rejected code)
+  if (isError) {
+    posthog.capture('gate_failure', { page: 'gate', is_test: isTest });
     document.getElementById('err').classList.add('show');
   }
-  // Uppercase code field as user types
-  const codeInput = document.getElementById('code');
+
+  // Uppercase code input
+  var codeInput = document.getElementById('code');
   codeInput.addEventListener('input', function () {
-    const pos = this.selectionStart;
+    var pos = this.selectionStart;
     this.value = this.value.toUpperCase();
     this.setSelectionRange(pos, pos);
   });
+
+  // Capture gate_submitted before POST fires; stash email for playbook identify
+  document.querySelector('form').addEventListener('submit', function () {
+    var email = (document.getElementById('email').value || '').trim().toLowerCase();
+    posthog.capture('gate_submitted', { page: 'gate', has_email: !!email, is_test: isTest });
+    if (email) { try { sessionStorage.setItem('t401_email', email); } catch(e) {} }
+  });
+})();
 </script>
 </body>
 </html>
