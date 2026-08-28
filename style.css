@@ -181,7 +181,7 @@ main {
   color: var(--muted);
   margin-bottom: .4rem;
 }
-.card p { font-size: .95rem; color: #333; margin-bottom: .5rem; }
+.card p { font-size: 1rem; color: #333; margin-bottom: .5rem; }
 .card p:last-child { margin-bottom: 0; }
 
 /* ── Step card (overview step links) ── */
@@ -245,7 +245,7 @@ main {
   border-radius: 8px;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
-  font-size: .95rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 .alert-terra {
@@ -279,7 +279,7 @@ main {
   border: 1px solid var(--sage-bdr);
   border-radius: 8px;
   padding: .85rem 1rem;
-  font-size: .9rem;
+  font-size: 1rem;
   line-height: 1.65;
   font-style: normal;
   margin: .75rem 0;
@@ -301,7 +301,7 @@ main {
   border-radius: 6px;
   padding: 1rem 1.1rem;
   font-family: 'Courier New', Courier, monospace;
-  font-size: .85rem;
+  font-size: 1rem;
   line-height: 1.75;
   white-space: pre-wrap;
   overflow-x: auto;
@@ -318,7 +318,7 @@ main {
   align-items: flex-start;
   gap: .6rem;
   padding: .4rem 0;
-  font-size: .95rem;
+  font-size: 1rem;
   border-bottom: 1px solid var(--border);
   line-height: 1.5;
 }
@@ -337,7 +337,7 @@ main {
   border: 1px solid var(--amber-bdr);
   border-radius: 8px;
   padding: .85rem 1.1rem;
-  font-size: .9rem;
+  font-size: 1rem;
   line-height: 1.6;
   margin: 1rem 0;
 }
@@ -403,13 +403,13 @@ main {
   margin-bottom: .25rem;
 }
 .tl-detail {
-  font-size: .9rem;
+  font-size: 1rem;
   color: #333;
   line-height: 1.6;
 }
 .tl-action {
   margin-top: .4rem;
-  font-size: .88rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--terra-dk);
 }
@@ -475,7 +475,7 @@ main {
   border-radius: 10px;
   padding: 1.1rem 1.25rem;
   margin: 1rem 0;
-  font-size: .95rem;
+  font-size: 1rem;
   line-height: 1.65;
 }
 .result strong { color: var(--terra); }
