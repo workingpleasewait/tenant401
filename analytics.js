@@ -33,5 +33,9 @@
   }
 
   capture('$pageview', { $current_url: location.href, page: page });
-  capture('playbook_viewed', { page: page });
+  if (page === 'playbook') {
+    capture('playbook_viewed', { page: page });
+  } else {
+    capture('playbook_screen_viewed', { page: page });
+  }
 })();
