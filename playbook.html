@@ -4,233 +4,11 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tenant Playbook — 205 East 17th Street</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --ink:     #1a1a2e;
-    --bg:      #fafaf8;
-    --white:   #ffffff;
-    --accent:  #c4572b;
-    --terra:   #c4572b;
-    --terra-bg:#fef3ee;
-    --muted:   #6b6b7b;
-    --border:  #e0ddd8;
-    --warm:    #fff8f0;
-    --warm-bdr:#f0c090;
-  }
-
-  html { height: 100%; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-                 Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.65;
-    background: var(--bg);
-    color: var(--ink);
-    min-height: 100%;
-  }
-
-  /* ── Header ── */
-  header {
-    background: var(--terra);
-    color: #fff;
-    padding: 2rem 1.5rem 1.75rem;
-    text-align: center;
-  }
-  header .eyebrow {
-    font-size: .72rem;
-    font-weight: 600;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.7);
-    margin-bottom: .5rem;
-  }
-  header h1 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -.015em;
-    line-height: 1.25;
-  }
-  header .sub {
-    margin-top: .45rem;
-    color: rgba(255,255,255,.8);
-    font-size: .875rem;
-  }
-
-  /* ── Nav ── */
-  nav {
-    background: #a83d1e;
-    display: flex;
-    gap: .4rem;
-    justify-content: center;
-    padding: .7rem 1rem;
-    flex-wrap: wrap;
-    border-bottom: 1px solid rgba(0,0,0,.1);
-  }
-  nav a {
-    color: rgba(255,255,255,.88);
-    text-decoration: none;
-    font-size: .8rem;
-    font-weight: 500;
-    padding: .25rem .65rem;
-    border-radius: 4px;
-    border: 1px solid rgba(255,255,255,.22);
-    transition: background .15s, color .15s;
-    white-space: nowrap;
-  }
-  nav a:hover { background: rgba(255,255,255,.15); color: #fff; }
-
-  /* ── Content ── */
-  main {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem 3.5rem;
-  }
-
-  /* Section headings */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin: 2.25rem 0 .75rem;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  h2 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: .6rem;
-    line-height: 1.3;
-  }
-
-  p { margin-bottom: .9rem; }
-  p:last-child { margin-bottom: 0; }
-
-  a { color: var(--accent); }
-  a:hover { text-decoration: underline; }
-
-  /* Step cards */
-  .step {
-    background: var(--terra-bg);
-    border-left: 3px solid var(--terra);
-    border-radius: 0 8px 8px 0;
-    padding: 1.1rem 1.1rem 1.1rem 1.25rem;
-    margin: .75rem 0 1.25rem;
-  }
-  .step-header {
-    display: flex;
-    align-items: baseline;
-    gap: .6rem;
-    margin-bottom: .5rem;
-  }
-  .step-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--terra);
-    color: #fff;
-    border-radius: 50%;
-    width: 1.55rem;
-    height: 1.55rem;
-    font-weight: 700;
-    font-size: .8rem;
-    flex-shrink: 0;
-  }
-  .step-title { font-weight: 700; font-size: 1rem; }
-  .step p { font-size: .9rem; margin-top: .3rem; color: #333; }
-  .step .note {
-    margin-top: .6rem;
-    font-size: .8rem;
-    color: var(--muted);
-  }
-
-  /* Address box */
-  .addr {
-    display: block;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: .7rem 1rem;
-    margin: .6rem 0;
-    font-size: .875rem;
-    line-height: 1.55;
-    font-style: normal;
-  }
-
-  /* Result box */
-  .result {
-    background: var(--warm);
-    border: 1px solid var(--warm-bdr);
-    border-radius: 8px;
-    padding: 1.1rem 1.25rem;
-    margin: 1rem 0;
-    font-size: .9rem;
-    line-height: 1.6;
-  }
-  .result strong { color: var(--accent); }
-  .result ul {
-    padding-left: 1.2rem;
-    margin-top: .6rem;
-    line-height: 1.95;
-  }
-  .docket { font-weight: 700; color: var(--accent); letter-spacing: .04em; }
-
-  /* Letter template */
-  details { margin: .75rem 0; }
-  summary {
-    cursor: pointer;
-    font-size: .875rem;
-    font-weight: 600;
-    color: var(--accent);
-    user-select: none;
-    padding: .4rem 0;
-  }
-  summary:hover { text-decoration: underline; }
-  .letter {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1rem 1.1rem;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: .82rem;
-    line-height: 1.75;
-    white-space: pre-wrap;
-    margin-top: .5rem;
-    overflow-x: auto;
-  }
-
-
-  /* Footer */
-  footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: .78rem;
-    padding: 1.25rem 1rem;
-    border-top: 1px solid var(--border);
-  }
-
-  @media (max-width: 480px) {
-    header { padding: 1.75rem 1.25rem 1.5rem; }
-    header h1 { font-size: 1.2rem; }
-    main { padding: 1.5rem 1.1rem 3rem; }
-    .contacts li { flex-direction: column; gap: .2rem; }
-    .contacts .label { min-width: unset; }
-  }
-</style>
+<link rel="stylesheet" href="/style.css"/>
 </head>
-<body>
+<body data-page="playbook">
+
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <div class="eyebrow">Brooklyn, NY 11226</div>
@@ -238,129 +16,69 @@
   <p class="sub">Rent reduction rights for lack of elevator service</p>
 </header>
 
-<nav>
-  <a href="#steps-en">Steps</a>
-  <a href="#result">📋 Real case</a>
-</nav>
+<main id="main">
 
-<main>
-
-<div class="section-label" id="steps-en">Step-by-step guide</div>
-
-<h2>Rent Reduction for Lack of Elevator Service</h2>
-<p>
-  This guide walks you through how to secure a rent reduction from DHCR
-  (Division of Housing and Community Renewal) when elevator service at
-  205 East 17th Street is broken or degraded. The steps below worked —
-  a tenant here won a formal rent reduction order in 2024 that continues today.
-</p>
-
-<!-- Step 1 -->
-<div class="step">
-  <div class="step-header">
-    <span class="step-num">1</span>
-    <span class="step-title">File a 311 Complaint</span>
+  <div class="alert alert-terra" style="margin-top:0;margin-bottom:1.5rem">
+    <strong>Is this your building?</strong> This guide is for rent-stabilized and rent-controlled tenants at 205 East 17th Street, Brooklyn. The DHCR process described here applies to rent-regulated apartments only.
   </div>
-  <p>
-    Go to <a href="https://portal.311.nyc.gov/" target="_blank" rel="noopener">311.nyc.gov</a>
-    or call <strong>311</strong>. Report: <em>"Elevator not functioning properly"</em>
-    or <em>"Unsafe elevator conditions."</em> Save your Service Request (SR) number.
-  </p>
-  <p class="note">📌 This creates an official record — you will attach it to your DHCR filing.</p>
-</div>
 
-<!-- Step 2 -->
-<div class="step">
-  <div class="step-header">
-    <span class="step-num">2</span>
-    <span class="step-title">Notify the Landlord by Certified Mail</span>
+  <div class="alert alert-amber" style="margin-bottom:1.5rem">
+    <strong>Emergency?</strong> If someone is trapped, an elevator shaft is open, or the elevator is moving dangerously — call <strong>911</strong>, not 311.
   </div>
-  <p>Send a certified letter. Keep the receipt — you'll attach it to the DHCR form.</p>
-  <address class="addr">
-    <strong>Mail to:</strong><br>
-    205 Realty Holdings LLC<br>
-    1274 49th Street, Suite 175<br>
-    Brooklyn, NY 11219
-  </address>
-  <details>
-    <summary>Sample letter (tap to expand)</summary>
-    <div class="letter">[Your Name]
-205 East 17th Street, Apt. [Your Unit]
-Brooklyn, NY 11226
-[Date]
 
-205 Realty Holdings LLC
-1274 49th Street, Suite 175
-Brooklyn, NY 11219
+  <h2 style="margin-bottom:.5rem">Elevator out of service?</h2>
+  <p style="margin-bottom:1.5rem">You may be entitled to a rent reduction. This three-step process worked for a tenant here — a formal DHCR rent reduction order was issued in 2024 that continues today.</p>
 
-Dear 205 Realty Holdings LLC,
+  <div class="section-label">Three steps</div>
 
-I am writing to formally request that the elevator service at 205 East
-17th Street be restored immediately. As of [date], the elevator has been
-[describe: completely out of service / unreliable / malfunctioning].
-Despite prior complaints, the service remains unreliable.
+  <a href="/step-1.html" class="step-card" aria-label="Step 1: File a 311 Complaint">
+    <span class="sc-num" aria-hidden="true">1</span>
+    <span class="sc-body">
+      <span class="sc-title">File a 311 Complaint</span>
+      <span class="sc-hint">Create an official city record of the elevator problem</span>
+    </span>
+    <span class="sc-arrow" aria-hidden="true">›</span>
+  </a>
 
-I request prompt repairs and a written response confirming the timeline.
-If this is not resolved within a reasonable time, I will file a rent
-reduction application with DHCR.
+  <a href="/step-2.html" class="step-card" aria-label="Step 2: Notify the Landlord by Certified Mail">
+    <span class="sc-num" aria-hidden="true">2</span>
+    <span class="sc-body">
+      <span class="sc-title">Notify the Landlord</span>
+      <span class="sc-hint">Send a certified letter — sample letter included</span>
+    </span>
+    <span class="sc-arrow" aria-hidden="true">›</span>
+  </a>
 
-Sincerely,
-[Your Name]
-[Your Phone / Email]</div>
-  </details>
-</div>
+  <a href="/step-3.html" class="step-card" aria-label="Step 3: File DHCR Form RA-84">
+    <span class="sc-num" aria-hidden="true">3</span>
+    <span class="sc-body">
+      <span class="sc-title">File with DHCR — Form RA-84</span>
+      <span class="sc-hint">The official application for a rent reduction</span>
+    </span>
+    <span class="sc-arrow" aria-hidden="true">›</span>
+  </a>
 
-<!-- Step 3 -->
-<div class="step">
-  <div class="step-header">
-    <span class="step-num">3</span>
-    <span class="step-title">Apply for Rent Reduction — DHCR Form RA-84</span>
+  <div class="section-label" style="margin-top:1.75rem">Real-world result</div>
+
+  <div class="result">
+    <strong>A tenant at this building filed — and won.</strong>
+    <ul>
+      <li>Complaint filed: April 16, 2024</li>
+      <li>Certified letter sent to 205 Realty Holdings LLC</li>
+      <li>DHCR application submitted with all attachments</li>
+      <li>Rent reduction <strong>effective August 1, 2024</strong></li>
+      <li>DHCR order issued October 11, 2024</li>
+      <li>Docket: <span class="docket">MP 210039 B</span></li>
+    </ul>
+    <p style="margin-top:.75rem">
+      The order is still in effect. Two landlord restoration attempts have been denied — the most recent in August 2026.
+      <strong>Other tenants at this building can use the same process.</strong>
+    </p>
   </div>
-  <p>
-    Use RA-84 for this building-wide elevator condition. Attach a copy of your
-    written notice to the owner, proof of mailing or delivery, and supporting
-    evidence such as your 311 Service Request. Mail the original signed form,
-    one copy of the form, and one copy of every attachment. Keep a complete copy.
-    <br>
-    <a href="https://hcr.ny.gov/form-ra-84" target="_blank" rel="noopener">
-      Download Form RA-84 &rarr;
-    </a>
-    If other tenants are joining the same complaint, also use Form RA-84.1.
-  </p>
-  <address class="addr">
-    <strong>Mail to:</strong><br>
-    DHCR – Rent Administration Office<br>
-    Gertz Plaza, 92-31 Union Hall Street, 6th Floor<br>
-    Jamaica, NY 11433
-  </address>
-  <p class="note">
-    Track your application:
-    <a href="https://hcr.ny.gov/node/51" target="_blank" rel="noopener">
-      HCR Tenant Resources (hcr.ny.gov)
-    </a>
-  </p>
-</div>
 
-<!-- Result -->
-<div class="section-label" id="result">Real-world result</div>
-
-<div class="result">
-  <strong>A tenant at 205 East 17th Street — this worked.</strong>
-  <ul>
-    <li>Initial complaint filed: April 16, 2024</li>
-    <li>Certified letter sent to 205 Realty Holdings LLC</li>
-    <li>DHCR application submitted with all attachments</li>
-    <li>Rent reduction <strong>effective August 1, 2024</strong></li>
-    <li>DHCR order issued October 11, 2024</li>
-    <li>Docket: <span class="docket">MP 210039 B</span></li>
-  </ul>
-  <p style="margin-top:.75rem">
-    Complaint filed April 16 — order issued October 11, 2024. About 6 months. The order is now on record with DHCR.
-    <strong>Other tenants at this building can use the same process.</strong>
-  </p>
-</div>
-
-
+  <a href="/after-you-file.html" class="btn btn-secondary" style="margin-top:1rem" aria-label="Already filed? See what to expect next">
+    Already filed? What to expect →
+  </a>
 
 </main>
 
@@ -369,40 +87,6 @@ Sincerely,
   &middot; This site is not legal advice
 </footer>
 
-<script>
-!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}var c=t.createElement("script");c.type="text/javascript",c.crossOrigin="anonymous",c.async=!0,c.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js";var l=t.getElementsByTagName("script")[0];l.parentNode.insertBefore(c,l);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},n="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId setPersonPropertiesForFlags".split(" "),p=0;p<n.length;p++)g(u,n[p]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-
-var posthogTestMode = new URLSearchParams(location.search).get('is_test') === '1';
-try {
-  posthogTestMode = posthogTestMode || sessionStorage.getItem('t401_test_mode') === '1';
-} catch(e) {}
-if (!posthogTestMode) {
-  posthog.init('phc_uY5md7SXOeMdNmMPiDi8rkp14ioLWGViqitHfvWLfhR', {
-    api_host: 'https://us.i.posthog.com',
-    autocapture: false,
-    capture_pageview: false,
-    persistence: 'localStorage+cookie',
-  });
-}
-
-(function () {
-  var isTest = posthogTestMode;
-  function capture(event, properties) {
-    if (!isTest) posthog.capture(event, properties);
-  }
-
-  // Fire gate_success once, only after a form submission reaches the playbook.
-  var gateSubmitted = false;
-  try {
-    gateSubmitted = sessionStorage.getItem('t401_gate_submitted') === '1';
-    sessionStorage.removeItem('t401_gate_submitted');
-  } catch(e) {}
-  if (gateSubmitted) capture('gate_success', { page: 'playbook' });
-
-  // playbook_viewed — standard pageview for the playbook
-  capture('$pageview', { $current_url: location.href, page: 'playbook' });
-  capture('playbook_viewed', { page: 'playbook' });
-})();
-</script>
+<script src="/analytics.js"></script>
 </body>
 </html>
