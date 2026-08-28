@@ -9,12 +9,23 @@
 
   var isTest = new URLSearchParams(location.search).get('is_test') === '1';
   try { isTest = isTest || sessionStorage.getItem('t401_test_mode') === '1'; } catch(e) {}
+  // Also suppress on non-production origins (localhost, file://)
+  var isProd = location.protocol === 'https:' && location.hostname === 'tenant401.com';
+  if (!isProd) isTest = true;
 
   if (!isTest) {
     posthog.init('phc_uY5md7SXZ4go2PMD53CAk2Z5SzjH59rpiMTQ9oRT8Man', {
       api_host: 'https://us.i.posthog.com',
       autocapture: false,
       capture_pageview: false,
+      capture_pageleave: false,
+      capture_dead_clicks: false,
+      capture_exceptions: false,
+      capture_heatmaps: false,
+      capture_performance: false,
+      disable_session_recording: true,
+      disable_surveys: true,
+      advanced_disable_flags: true,
       persistence: 'localStorage+cookie',
     });
   }
