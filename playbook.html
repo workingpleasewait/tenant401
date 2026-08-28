@@ -390,8 +390,8 @@ Sincerely,
   </address>
   <p class="note">
     Track your application:
-    <a href="https://apps.hcr.ny.gov/tenantportal" target="_blank" rel="noopener">
-      DHCR Tenant Portal
+    <a href="https://hcr.ny.gov/node/51" target="_blank" rel="noopener">
+      HCR Tenant Resources
     </a>
   </p>
 </div>
@@ -461,6 +461,7 @@ Sincerely,
 
 <!-- ═══════════════ FRENCH ═══════════════ -->
 
+<section lang="fr" aria-labelledby="steps-fr">
 <div class="lang-divider" id="steps-fr">Guide en français</div>
 
 <h2>Réduction de loyer pour absence de service d'ascenseur</h2>
@@ -483,7 +484,7 @@ Sincerely,
     <em>« Conditions d'ascenseur dangereuses »</em>.
     Conservez votre numéro de demande de service (SR).
   </p>
-  <p class="note">📌 Cette plainte crée un dossier officiel — vous l'joindrez à votre demande DHCR.</p>
+  <p class="note">📌 Cette plainte crée un dossier officiel — vous la joindrez à votre demande DHCR.</p>
 </div>
 
 <!-- Étape 2 -->
@@ -553,8 +554,8 @@ Cordialement,
   </address>
   <p class="note">
     Suivez votre demande sur le
-    <a href="https://apps.hcr.ny.gov/tenantportal" target="_blank" rel="noopener">
-      Portail DHCR
+    <a href="https://hcr.ny.gov/node/51" target="_blank" rel="noopener">
+      Ressources pour les locataires de la HCR
     </a>.
   </p>
 </div>
@@ -566,6 +567,7 @@ Cordialement,
   Ordre DHCR émis le 11 octobre 2024 &middot;
   Dossier n°&nbsp;<span class="docket">MP 210039 B</span>
 </div>
+</section>
 
 </main>
 
@@ -578,6 +580,9 @@ Cordialement,
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}var c=t.createElement("script");c.type="text/javascript",c.crossOrigin="anonymous",c.async=!0,c.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js";var l=t.getElementsByTagName("script")[0];l.parentNode.insertBefore(c,l);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},n="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId setPersonPropertiesForFlags".split(" "),p=0;p<n.length;p++)g(u,n[p]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
 
 var posthogTestMode = new URLSearchParams(location.search).get('is_test') === '1';
+try {
+  posthogTestMode = posthogTestMode || sessionStorage.getItem('t401_test_mode') === '1';
+} catch(e) {}
 if (!posthogTestMode) {
   posthog.init('phc_uY5md7SXOeMdNmMPiDi8rkp14ioLWGViqitHfvWLfhR', {
     api_host: 'https://us.i.posthog.com',
