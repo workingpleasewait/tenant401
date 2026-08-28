@@ -7,8 +7,8 @@ export async function onRequest({ request, next, env }) {
   const url = new URL(request.url);
   let response;
 
-  // Always allow the landing page and the login POST
-  if (url.pathname === '/' || url.pathname === '/api/login') {
+  // Always allow the landing page, the login POST, and logout
+  if (url.pathname === '/' || url.pathname === '/api/login' || url.pathname === '/api/logout') {
     response = await next();
   } else {
     // Check for a valid session cookie
