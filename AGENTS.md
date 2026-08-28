@@ -3,22 +3,44 @@ type: Note
 _organized: true
 ---
 
-# AGENTS.md — Tolaria Vault
+# AGENTS.md — tenant401
 
-This is a [Tolaria](https://github.com/refactoringhq/tolaria) vault.
+Password-gated tenant resource site at [tenant401.com](https://tenant401.com) for 205 East 17th Street, Brooklyn, NY 11226. Hosted on Cloudflare Pages.
 
-Keep this file focused on vault-specific conventions. For general Tolaria behavior, use the bundled Tolaria agent docs path provided by the app session context.
+## What this repo is
 
-## Core conventions
+A static site that publishes the rent-reduction playbook (English + French) — a step-by-step guide for tenants filing a DHCR rent reduction complaint for elevator service failures. Access is gated by a session cookie (HMAC-signed, verified by a Cloudflare Pages Function).
 
-- Notes are Markdown files.
-- Use the first H1 as the note title.
-- Store note type in the `type:` frontmatter field.
-- Use wikilinks in body text and frontmatter fields to connect notes.
-- Tolaria reads notes recursively from all folders and stores new notes in the vault root by default.
-- Saved views live in `views/*.yml`.
+## Repo structure
 
-## What agents should do
+| Path | Purpose |
+|---|---|
+| `index.html` | Main site — landing page + authenticated tenant content |
+| `playbook.html` | The rent-reduction playbook (English + French) |
+| `functions/_middleware.js` | CF Pages middleware — validates `t401_session` cookie on all routes except `/` and `/api/login` |
+| `functions/api/login.js` | Login endpoint — issues signed session cookie |
 
-- Create and edit notes using the frontmatter and H1 conventions above.
-- Update `AGENTS.md` only when the user asks for vault-level guidance changes.
+## Deploy
+
+Push to `main` → Cloudflare Pages auto-deploys. No build step.
+
+## Environment variables (set in CF Pages dashboard)
+
+| Variable | Purpose |
+|---|---|
+| `COOKIE_SECRET` | HMAC signing key for session cookies |
+| `BREVO_API_KEY` | Brevo REST API key for email list enrollment |
+| `BREVO_LIST_ID` | Brevo contact list numeric ID |
+
+## Local preview
+
+```bash
+npx wrangler pages dev . --compatibility-date=2024-01-01
+```
+
+## Conventions
+
+- No build step — edit `index.html` and `playbook.html` directly.
+- Middleware runs on every non-public route; public routes are `/` and `/api/login`.
+- Session cookie name: `t401_session`. Format: `base64(payload).hmac`.
+- Do not commit secrets — all credentials live in the CF Pages dashboard.
