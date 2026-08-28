@@ -9,17 +9,13 @@
 
   :root {
     --ink:     #1a1a2e;
-    --ink-mid: #2d2d4a;
-    --bg:      #f5f4f0;
+    --bg:      #fafaf8;
     --white:   #ffffff;
-    --accent:  #b5451b;
+    --accent:  #c4572b;
+    --terra:   #c4572b;
+    --terra-bg:#fef3ee;
     --muted:   #6b6b7b;
     --border:  #e0ddd8;
-    --green:   #2d6a2d;
-    --green-bg:#edf7ed;
-    --blue:    #1e3a6e;
-    --blue-bg: #eef2fb;
-    --blue-bdr:#c5d5f0;
     --warm:    #fff8f0;
     --warm-bdr:#f0c090;
   }
@@ -37,7 +33,7 @@
 
   /* ── Header ── */
   header {
-    background: var(--ink);
+    background: var(--terra);
     color: #fff;
     padding: 2rem 1.5rem 1.75rem;
     text-align: center;
@@ -47,7 +43,7 @@
     font-weight: 600;
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: #8888aa;
+    color: rgba(255,255,255,.7);
     margin-bottom: .5rem;
   }
   header h1 {
@@ -58,32 +54,32 @@
   }
   header .sub {
     margin-top: .45rem;
-    color: #9999bb;
+    color: rgba(255,255,255,.8);
     font-size: .875rem;
   }
 
   /* ── Nav ── */
   nav {
-    background: var(--ink-mid);
+    background: #a83d1e;
     display: flex;
     gap: .4rem;
     justify-content: center;
     padding: .7rem 1rem;
     flex-wrap: wrap;
-    border-bottom: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(0,0,0,.1);
   }
   nav a {
-    color: #b8b8d8;
+    color: rgba(255,255,255,.88);
     text-decoration: none;
     font-size: .8rem;
     font-weight: 500;
     padding: .25rem .65rem;
     border-radius: 4px;
-    border: 1px solid rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
     transition: background .15s, color .15s;
     white-space: nowrap;
   }
-  nav a:hover { background: rgba(255,255,255,.1); color: #fff; }
+  nav a:hover { background: rgba(255,255,255,.15); color: #fff; }
 
   /* ── Content ── */
   main {
@@ -127,8 +123,8 @@
 
   /* Step cards */
   .step {
-    background: var(--green-bg);
-    border-left: 3px solid var(--green);
+    background: var(--terra-bg);
+    border-left: 3px solid var(--terra);
     border-radius: 0 8px 8px 0;
     padding: 1.1rem 1.1rem 1.1rem 1.25rem;
     margin: .75rem 0 1.25rem;
@@ -143,7 +139,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--green);
+    background: var(--terra);
     color: #fff;
     border-radius: 50%;
     width: 1.55rem;
@@ -159,17 +155,6 @@
     font-size: .8rem;
     color: var(--muted);
   }
-
-  /* French step cards */
-  .step-fr {
-    background: var(--blue-bg);
-    border-left: 3px solid var(--blue);
-    border-radius: 0 8px 8px 0;
-    padding: 1.1rem 1.1rem 1.1rem 1.25rem;
-    margin: .75rem 0 1.25rem;
-  }
-  .step-fr .step-num { background: var(--blue); }
-  .step-fr p { font-size: .9rem; margin-top: .3rem; color: #333; }
 
   /* Address box */
   .addr {
@@ -226,25 +211,6 @@
     overflow-x: auto;
   }
 
-  /* Language divider */
-  .lang-divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 2.75rem 0 2rem;
-    color: var(--muted);
-    font-size: .8rem;
-    font-weight: 600;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-  }
-  .lang-divider::before, .lang-divider::after {
-    content: '';
-    flex: 1;
-    height: 2px;
-    background: var(--border);
-  }
-
   /* Contacts */
   .contacts { list-style: none; padding: 0; }
   .contacts li {
@@ -290,15 +256,12 @@
 </header>
 
 <nav>
-  <a href="#steps-en">🇺🇸 Steps (English)</a>
+  <a href="#steps-en">Steps</a>
   <a href="#result">📋 Real case</a>
   <a href="#contacts">📞 Contacts</a>
-  <a href="#steps-fr">🇫🇷 Guide (Français)</a>
 </nav>
 
 <main>
-
-<!-- ═══════════════ ENGLISH ═══════════════ -->
 
 <div class="section-label" id="steps-en">Step-by-step guide</div>
 
@@ -459,116 +422,6 @@ Sincerely,
   </li>
 </ul>
 
-<!-- ═══════════════ FRENCH ═══════════════ -->
-
-<section lang="fr" aria-labelledby="steps-fr">
-<div class="lang-divider" id="steps-fr">Guide en français</div>
-
-<h2>Réduction de loyer pour absence de service d'ascenseur</h2>
-<p>
-  Ce guide vous explique comment obtenir une réduction de loyer auprès de la DHCR
-  (Division of Housing and Community Renewal) lorsque le service d'ascenseur
-  au 205 East 17th Street est en panne ou dégradé.
-</p>
-
-<!-- Étape 1 -->
-<div class="step-fr">
-  <div class="step-header">
-    <span class="step-num">1</span>
-    <span class="step-title">Déposer une plainte auprès de 311</span>
-  </div>
-  <p>
-    Visitez <a href="https://311.nyc.gov" target="_blank" rel="noopener">311.nyc.gov</a>
-    ou appelez le <strong>311</strong>. Signalez :
-    <em>« Ascenseur ne fonctionnant pas correctement »</em> ou
-    <em>« Conditions d'ascenseur dangereuses »</em>.
-    Conservez votre numéro de demande de service (SR).
-  </p>
-  <p class="note">📌 Cette plainte crée un dossier officiel — vous la joindrez à votre demande DHCR.</p>
-</div>
-
-<!-- Étape 2 -->
-<div class="step-fr">
-  <div class="step-header">
-    <span class="step-num">2</span>
-    <span class="step-title">Notifier le propriétaire par lettre recommandée</span>
-  </div>
-  <p>Conservez le reçu de la lettre recommandée.</p>
-  <address class="addr">
-    <strong>Adresse :</strong><br>
-    205 Realty Holdings LLC<br>
-    1274 49th Street, Suite 175<br>
-    Brooklyn, NY 11219
-  </address>
-  <details>
-    <summary>Modèle de lettre (appuyez pour afficher)</summary>
-    <div class="letter">[Votre Nom]
-205 East 17th Street, Apt. [Votre Numéro]
-Brooklyn, NY 11226
-[Date]
-
-205 Realty Holdings LLC
-1274 49th Street, Suite 175
-Brooklyn, NY 11219
-
-Monsieur/Madame,
-
-Je vous écris pour vous demander formellement que le service d'ascenseur
-au 205 East 17th Street soit rétabli immédiatement. Depuis le [date],
-l'ascenseur est [hors service / dysfonctionnant]. Malgré les plaintes
-antérieures, le service reste peu fiable.
-
-Je vous demande que les réparations soient effectuées rapidement. Si ce
-problème n'est pas résolu dans un délai raisonnable, je demanderai une
-réduction de loyer auprès de la DHCR.
-
-Cordialement,
-[Votre Nom]
-[Vos coordonnées]</div>
-  </details>
-</div>
-
-<!-- Étape 3 -->
-<div class="step-fr">
-  <div class="step-header">
-    <span class="step-num">3</span>
-    <span class="step-title">Demander une réduction de loyer — Formulaire RA-84</span>
-  </div>
-  <p>
-    Utilisez le formulaire RA-84 pour ce problème d'ascenseur touchant l'ensemble
-    de l'immeuble. Joignez une copie de votre avis écrit au propriétaire, la preuve
-    d'envoi ou de remise et vos justificatifs, notamment la demande 311. Envoyez
-    l'original signé, une copie du formulaire et une copie de chaque pièce jointe.
-    Conservez une copie complète de votre dossier.
-    <br>
-    <a href="https://hcr.ny.gov/form-ra-84" target="_blank" rel="noopener">
-      Télécharger le formulaire RA-84 &rarr;
-    </a>
-    Si d'autres locataires se joignent à la même plainte, utilisez aussi le formulaire RA-84.1.
-  </p>
-  <address class="addr">
-    <strong>Envoyez à :</strong><br>
-    DHCR – Bureau de l'administration des loyers<br>
-    Gertz Plaza, 92-31 Union Hall Street, 6th Floor<br>
-    Jamaica, NY 11433
-  </address>
-  <p class="note">
-    Suivez votre demande sur le
-    <a href="https://hcr.ny.gov/node/51" target="_blank" rel="noopener">
-      Ressources pour les locataires de la HCR
-    </a>.
-  </p>
-</div>
-
-<div class="result" style="background:var(--blue-bg);border-color:var(--blue-bdr);margin-top:1.25rem">
-  <strong>Résultat concret :</strong>
-  Plainte déposée le 16 avril 2024 &middot;
-  Réduction effective le 1<sup>er</sup> août 2024 &middot;
-  Ordre DHCR émis le 11 octobre 2024 &middot;
-  Dossier n°&nbsp;<span class="docket">MP 210039 B</span>
-</div>
-</section>
-
 </main>
 
 <footer>
@@ -609,22 +462,6 @@ if (!posthogTestMode) {
   // playbook_viewed — standard pageview for the playbook
   capture('$pageview', { $current_url: location.href, page: 'playbook' });
   capture('playbook_viewed', { page: 'playbook' });
-
-  // playbook_language_french — fires once when the French section header scrolls into view
-  var frenchFired = false;
-  var frenchTarget = document.getElementById('steps-fr');
-  if (frenchTarget && 'IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting && !frenchFired) {
-          frenchFired = true;
-          capture('playbook_language_french', { page: 'playbook' });
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.1 });
-    observer.observe(frenchTarget);
-  }
 })();
 </script>
 </body>

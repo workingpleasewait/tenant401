@@ -9,13 +9,12 @@
 
   :root {
     --ink:     #1a1a2e;
-    --ink-mid: #2d2d4a;
-    --bg:      #f5f4f0;
+    --bg:      #fafaf8;
     --white:   #ffffff;
-    --accent:  #b5451b;
+    --accent:  #c4572b;
+    --terra:   #c4572b;
     --muted:   #6b6b7b;
     --border:  #e0ddd8;
-    --green:   #2d6a2d;
     --red-bg:  #fef2f2;
     --red-bdr: #fca5a5;
     --red-txt: #991b1b;
@@ -37,7 +36,7 @@
 
   /* ── Header ── */
   header {
-    background: var(--ink);
+    background: var(--terra);
     color: #fff;
     padding: 2.5rem 1.5rem 2rem;
     text-align: center;
@@ -47,7 +46,7 @@
     font-weight: 600;
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: #8888aa;
+    color: rgba(255,255,255,.7);
     margin-bottom: .6rem;
   }
   header h1 {
@@ -58,7 +57,7 @@
   }
   header .sub {
     margin-top: .5rem;
-    color: #9999bb;
+    color: rgba(255,255,255,.8);
     font-size: .9rem;
   }
 
@@ -156,7 +155,7 @@
     width: 100%;
     margin-top: .25rem;
     padding: .8rem 1rem;
-    background: var(--ink);
+    background: var(--terra);
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -167,8 +166,8 @@
     transition: background .15s;
     letter-spacing: .01em;
   }
-  button[type="submit"]:hover { background: var(--ink-mid); }
-  button[type="submit"]:active { background: #111120; }
+  button[type="submit"]:hover { background: #a83d1e; }
+  button[type="submit"]:active { background: #8f3319; }
 
   /* Footer */
   footer {
