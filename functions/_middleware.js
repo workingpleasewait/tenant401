@@ -1,6 +1,6 @@
 /**
  * Middleware — runs on every request.
- * Public routes: /, /api/login  (the landing page and login endpoint)
+ * Public routes: /, /api/login, /api/logout
  * Everything else requires a valid signed session cookie.
  */
 export async function onRequest({ request, next, env }) {
