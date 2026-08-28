@@ -1,9 +1,11 @@
 /**
  * POST /api/login
- * Body: application/x-www-form-urlencoded  { email, code }
+ * Body: application/x-www-form-urlencoded  { email, code, updates_consent? }
  *
  * 1. Validates code against ACCESS_CODE env var
- * 2. On success: enrolls email in Brevo list, sends welcome email, sets session cookie
+ * 2. On success:
+ *    - Always sends a transactional welcome email (first login only)
+ *    - Enrolls in Brevo list only when updates_consent=1
  * 3. On failure: redirects to /?error=1
  */
 export async function onRequestPost({ request, env, waitUntil }) {
@@ -11,6 +13,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   const email = (body.get('email') || '').trim().toLowerCase();
   const code  = (body.get('code')  || '').trim().toUpperCase();
   const stored = (env.ACCESS_CODE  || '').trim().toUpperCase();
+  const updatesConsent = body.get('updates_consent') === '1';
 
   if (!isValidEmail(email) || !code || !stored || !(await timingSafeEqual(code, stored))) {
     return Response.redirect(new URL('/?error=1', request.url), 303);
@@ -21,14 +24,21 @@ export async function onRequestPost({ request, env, waitUntil }) {
     return new Response('Server configuration error', { status: 500 });
   }
 
-  // Brevo: check for existing contact, then enroll + send welcome email.
-  const listId = parseInt(env.BREVO_LIST_ID || '5', 10);
+  // Validate Brevo list ID — must be a positive integer.
+  const listId = parseInt(env.BREVO_LIST_ID || '', 10);
+  const brevoListValid = Number.isInteger(listId) && listId > 0;
+  if (!brevoListValid) {
+    console.error(`Brevo list ID invalid or missing (BREVO_LIST_ID=${env.BREVO_LIST_ID}) — skipping enrollment`);
+  }
+
+  // Brevo: check for existing contact, then send welcome email and/or enroll.
   if (env.BREVO_API_KEY) {
     const headers = { 'api-key': env.BREVO_API_KEY, 'Content-Type': 'application/json' };
 
     const brevoWork = (async () => {
-      // Check whether this email is already enrolled in the list.
+      // Check whether this email is already known to Brevo.
       let alreadyEnrolled = false;
+      let contactExists   = false;
       try {
         const checkRes = await fetch(
           `https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`,
@@ -36,34 +46,25 @@ export async function onRequestPost({ request, env, waitUntil }) {
         );
         if (checkRes.ok) {
           const contact = await checkRes.json();
-          alreadyEnrolled = Array.isArray(contact.listIds) && contact.listIds.includes(listId);
+          contactExists   = true;
+          alreadyEnrolled = brevoListValid &&
+            Array.isArray(contact.listIds) && contact.listIds.includes(listId);
           console.log(`Brevo contact check: found, enrolled=${alreadyEnrolled}`);
         } else if (checkRes.status === 404) {
           console.log('Brevo contact check: not found — new registration');
         } else {
-          // Unexpected error: fail open so a Brevo outage never blocks access.
+          // Unexpected error: fail open.
           console.error(`Brevo contact check failed with HTTP ${checkRes.status} — proceeding`);
         }
       } catch (err) {
-        // Network error: fail open.
         console.error('Brevo contact check threw:', err, '— proceeding');
       }
 
-      if (alreadyEnrolled) {
-        console.log('Brevo: already enrolled — skipping enrollment and welcome email');
-        return;
-      }
+      const tasks = [];
 
-      // New registration: enroll and send welcome email.
-      const results = await Promise.allSettled([
-        // 1. Enroll in contact list
-        brevoRequest('contact enrollment', 'https://api.brevo.com/v3/contacts', {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({ email, listIds: [listId], updateEnabled: true }),
-        }),
-        // 2. Send welcome email
-        brevoRequest('welcome email', 'https://api.brevo.com/v3/smtp/email', {
+      // Transactional welcome email — send on first login regardless of consent.
+      if (!contactExists) {
+        tasks.push(brevoRequest('welcome email', 'https://api.brevo.com/v3/smtp/email', {
           method: 'POST',
           headers,
           body: JSON.stringify({
@@ -78,8 +79,24 @@ export async function onRequestPost({ request, env, waitUntil }) {
             textContent: welcomeEmailText(email),
             tags: ['tenant401-welcome'],
           }),
-        }),
-      ]);
+        }));
+      }
+
+      // Mailing-list enrollment — only when tenant opted in and list config is valid.
+      if (updatesConsent && brevoListValid && !alreadyEnrolled) {
+        tasks.push(brevoRequest('contact enrollment', 'https://api.brevo.com/v3/contacts', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ email, listIds: [listId], updateEnabled: true }),
+        }));
+        console.log('Brevo: enrolling with consent');
+      } else if (!updatesConsent) {
+        console.log('Brevo: no consent — skipping list enrollment');
+      } else if (alreadyEnrolled) {
+        console.log('Brevo: already enrolled — skipping');
+      }
+
+      const results = await Promise.allSettled(tasks);
       for (const result of results) {
         if (result.status === 'rejected') console.error(result.reason);
       }
@@ -169,8 +186,9 @@ function welcomeEmailHtml(email) {
     </table>
 
     <p style="margin:0;font-size:13px;color:#6b6b7b;line-height:1.6">
-      You were enrolled at <strong>${email}</strong>. You may receive occasional
-      updates about tenant rights at 205 East 17th Street. If you did not sign up,
+      You were registered at <strong>${email}</strong>.
+      If you opted in to updates, you may receive occasional messages about
+      tenant rights at 205 East 17th Street. If you did not sign up,
       you can ignore this email.
     </p>
   </td></tr>
@@ -202,7 +220,8 @@ DHCR in 2024 that continues today.
 Go to the playbook: https://tenant401.com/playbook
 
 ---
-You were enrolled at ${email}. You may receive occasional updates about
+You were registered at ${email}.
+If you opted in to updates, you may receive occasional messages about
 tenant rights at 205 East 17th Street.
 
 205 East 17th Street · Brooklyn, NY 11226

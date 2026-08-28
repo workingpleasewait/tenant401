@@ -152,6 +152,31 @@
     color: var(--muted);
   }
 
+  /* Opt-in checkbox */
+  .opt-in {
+    display: flex;
+    align-items: flex-start;
+    gap: .55rem;
+    margin-top: .9rem;
+    margin-bottom: .1rem;
+  }
+  .opt-in input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+    margin-top: .18rem;
+    accent-color: var(--terra);
+    cursor: pointer;
+  }
+  .opt-in label {
+    font-size: .825rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0;
+    cursor: pointer;
+    margin-bottom: 0;
+  }
+
   button[type="submit"] {
     width: 100%;
     margin-top: .25rem;
@@ -226,6 +251,10 @@
 
       </div>
       <button type="submit">Access the playbook &rarr;</button>
+      <div class="opt-in">
+        <input type="checkbox" id="updates_consent" name="updates_consent" value="1"/>
+        <label for="updates_consent">Email me occasional updates about this building.</label>
+      </div>
     </form>
   </div>
 </main>
