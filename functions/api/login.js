@@ -114,23 +114,26 @@ export async function onRequestPost({ request, env, waitUntil }) {
 
   // Server-side gate_login event — authoritative record of a successful authentication.
   // Fires regardless of browser ad blockers or page-navigation timing.
-  // No email or PII — anonymous distinct ID only.
+  // No email or PII — $process_person_profile:false prevents person-profile creation.
   if (env.POSTHOG_API_KEY) {
+    const runId = `svr-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const phWork = fetch('https://us.i.posthog.com/i/v0/e', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         api_key: env.POSTHOG_API_KEY,
         event: 'gate_login',
-        distinct_id: 'server',
+        distinct_id: runId,
         properties: {
+          $process_person_profile: false,
           $host: 'tenant401.com',
           surface: 'server',
           updates_consent: updatesConsent,
-          new_contact: false, // updated below if applicable
         },
       }),
-    }).catch((err) => console.error('PostHog server capture failed:', err));
+    }).then((res) => {
+      if (!res.ok) console.error(`PostHog gate_login rejected: HTTP ${res.status}`);
+    }).catch((err) => console.error('PostHog gate_login failed:', err));
     if (typeof waitUntil === 'function') waitUntil(phWork);
     else await phWork;
   }

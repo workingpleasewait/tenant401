@@ -39,7 +39,7 @@ function withSecurityHeaders(response) {
   const secured = new Response(response.body, response);
   secured.headers.set('Content-Security-Policy', [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://us-assets.i.posthog.com",
+    "script-src 'self' 'unsafe-inline' https://us-assets.i.posthog.com https://a.tenant401.com",
     "connect-src 'self' https://a.tenant401.com https://us-assets.i.posthog.com",
     "img-src 'self' data: https://us.posthog.com",
     "style-src 'self' 'unsafe-inline'",
