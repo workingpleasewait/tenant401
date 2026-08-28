@@ -9,10 +9,11 @@
 
   :root {
     --ink:     #1a1a2e;
+    --ink-mid: #2d2d4a;
     --bg:      #fafaf8;
     --white:   #ffffff;
-    --accent:  #c4572b;
-    --terra:   #c4572b;
+    --accent:  #bc5429;
+    --terra:   #bc5429;
     --muted:   #6b6b7b;
     --border:  #e0ddd8;
     --red-bg:  #fef2f2;
@@ -166,7 +167,7 @@
     transition: background .15s;
     letter-spacing: .01em;
   }
-  button[type="submit"]:hover { background: #a83d1e; }
+  button[type="submit"]:hover { background: #a03a1d; }
   button[type="submit"]:active { background: #8f3319; }
 
   /* Footer */
@@ -220,7 +221,7 @@
       <div class="field">
         <label for="code">Access code</label>
         <input type="text" id="code" name="code" required
-               autocomplete="off" placeholder="Enter the code you were given"
+               autocomplete="off" placeholder="Your code"
                spellcheck="false" autocorrect="off" autocapitalize="characters"/>
 
       </div>
@@ -238,8 +239,14 @@
 
 var posthogTestMode = new URLSearchParams(location.search).get('is_test') === '1';
 try {
-  if (posthogTestMode) sessionStorage.setItem('t401_test_mode', '1');
-  else sessionStorage.removeItem('t401_test_mode');
+  if (posthogTestMode) {
+    sessionStorage.setItem('t401_test_mode', '1');
+  } else {
+    posthogTestMode = sessionStorage.getItem('t401_test_mode') === '1';
+    // Only clear if this is not an error redirect (error redirect has no is_test param
+    // but should preserve the flag set on the original test-mode load).
+    if (!posthogTestMode) sessionStorage.removeItem('t401_test_mode');
+  }
 } catch(e) {}
 if (!posthogTestMode) {
   posthog.init('phc_uY5md7SXOeMdNmMPiDi8rkp14ioLWGViqitHfvWLfhR', {

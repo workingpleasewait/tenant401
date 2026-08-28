@@ -139,7 +139,7 @@ function welcomeEmailHtml(email) {
 <table width="100%" style="max-width:560px" cellpadding="0" cellspacing="0" border="0">
 
   <!-- Header -->
-  <tr><td style="background:#c4572b;border-radius:10px 10px 0 0;padding:28px 32px 24px;text-align:center">
+  <tr><td style="background:#bc5429;border-radius:10px 10px 0 0;padding:28px 32px 24px;text-align:center">
     <p style="margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.75)">Brooklyn, NY 11226</p>
     <h1 style="margin:0;font-size:22px;font-weight:700;color:#ffffff;line-height:1.3">
       205 East 17th Street<br>Tenant Resource
@@ -161,8 +161,8 @@ function welcomeEmailHtml(email) {
 
     <!-- CTA button -->
     <table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px">
-    <tr><td style="background:#c4572b;border-radius:6px;text-align:center;padding:14px 28px">
-      <a href="https://tenant401.com" style="color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;display:block">
+    <tr><td style="background:#bc5429;border-radius:6px;text-align:center;padding:14px 28px">
+      <a href="https://tenant401.com/playbook" style="color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;display:block">
         Go to the playbook &rarr;
       </a>
     </td></tr>
@@ -199,7 +199,7 @@ how to file, what to send, and what to expect from DHCR. A tenant at this
 building used this process and received a formal rent reduction order from
 DHCR in 2024 that continues today.
 
-Go to the playbook: https://tenant401.com
+Go to the playbook: https://tenant401.com/playbook
 
 ---
 You were enrolled at ${email}. You may receive occasional updates about

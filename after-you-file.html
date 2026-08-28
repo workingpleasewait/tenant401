@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>What to Expect — 205 East 17th Street</title>
 <link rel="stylesheet" href="/style.css"/>
+<style>
+  /* Override timeline to work as ol/li */
+  .timeline { list-style: none; padding: 0; margin: 1rem 0; }
+  .timeline > li { display: flex; gap: 1rem; padding-bottom: 1.5rem; position: relative; }
+  .timeline > li:last-child { padding-bottom: 0; }
+</style>
 </head>
 <body data-page="after-you-file">
 
@@ -17,7 +23,7 @@
 </header>
 
 <nav class="step-bar" aria-label="Playbook navigation">
-  <a href="/playbook.html" class="all-steps">← All steps</a>
+  <a href="/playbook" class="all-steps">← All steps</a>
   <span class="step-indicator">What to Expect</span>
 </nav>
 
@@ -34,9 +40,9 @@
 
   <p style="font-size:1rem;color:var(--muted);margin-bottom:1.25rem">This is what happened in Docket <span class="docket">MP 210039 B</span>. Your case may move faster or slower.</p>
 
-  <div class="timeline" aria-label="Case timeline">
+  <ol class="timeline" aria-label="Case timeline">
 
-    <div class="tl-item">
+    <li class="tl-item">
       <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
       <div class="tl-body">
         <div class="tl-when">In this case: within a few days</div>
@@ -44,9 +50,9 @@
         <div class="tl-detail">DHCR assigns your docket number.</div>
         <div class="tl-action">→ Save the notice and docket number.</div>
       </div>
-    </div>
+    </li>
 
-    <div class="tl-item">
+    <li class="tl-item">
       <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
       <div class="tl-body">
         <div class="tl-when">In this case: about 3 months after filing</div>
@@ -61,9 +67,9 @@
         </div>
         <div class="tl-action">→ Watch the mail. If DHCR asks for a reply, meet the stated deadline.</div>
       </div>
-    </div>
+    </li>
 
-    <div class="tl-item">
+    <li class="tl-item">
       <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
       <div class="tl-body">
         <div class="tl-when">In this case: about 5 months after filing</div>
@@ -71,9 +77,9 @@
         <div class="tl-detail">DHCR may inspect the elevator.</div>
         <div class="tl-action">→ No apartment access is needed for an elevator complaint.</div>
       </div>
-    </div>
+    </li>
 
-    <div class="tl-item">
+    <li class="tl-item">
       <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
       <div class="tl-body">
         <div class="tl-when">In this case: about 6 months after filing</div>
@@ -81,9 +87,9 @@
         <div class="tl-detail">The order names the docket number, effective date, conditions found, and directs the owner to restore service. In this case: filed April 16 → order issued October 11, 2024.</div>
         <div class="tl-action">→ Save the order and pay the rent stated in it.</div>
       </div>
-    </div>
+    </li>
 
-  </div>
+  </ol>
 
   <div class="alert alert-terra" style="margin-top:1.75rem">
     <strong>After the order:</strong> Keep paying the reduced rent until DHCR issues a restoration order.
@@ -91,23 +97,22 @@
 
   <div class="card" style="margin-top:1rem">
     <div class="card-label">Owner wants to restore the rent?</div>
-    <p>DHCR will mail you a response form. If the elevator still has a problem covered by the rent-reduction order:</p>
+    <p>The owner must apply to DHCR. DHCR will contact you. If the elevator still has a problem covered by the rent-reduction order:</p>
     <ul class="checklist">
-      <li><span>Check <strong>No</strong> — service has not been restored</span></li>
+      <li>State that elevator service has not been restored</li>
       <li>Describe exactly what is still happening</li>
-      <li>Attach recent 311 numbers and other records</li>
-      <li>Return the form by DHCR's deadline</li>
+      <li>Attach recent 311 numbers and any other records</li>
+      <li>Return your response by DHCR's stated deadline</li>
     </ul>
-    <p><strong>This is part of your existing case.</strong> You do not need to start a new one. Do not sign a statement saying service was restored unless that is true.</p>
+    <p><strong>This is part of your existing case.</strong> You do not need to start a new one. Do not sign or agree to anything stating service was restored unless that is true.</p>
   </div>
 
   <div class="alert alert-amber" style="margin-top:1rem">
-    <strong>Keep paying the reduced rent</strong> unless DHCR issues a written restoration order. Checking <strong>No</strong> tells DHCR that you dispute the owner's claim; DHCR makes the decision.
+    <strong>Keep paying the reduced rent</strong> unless DHCR issues a written restoration order. Your response tells DHCR that you dispute the owner's claim; DHCR makes the final decision.
   </div>
 
-
   <nav class="page-nav" aria-label="Page navigation">
-    <a href="/playbook.html" class="btn btn-secondary">← Back to all steps</a>
+    <a href="/playbook" class="btn btn-secondary">← Back to all steps</a>
   </nav>
 
 </main>

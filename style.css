@@ -3,8 +3,8 @@
 
 /* ── Tokens ── */
 :root {
-  --terra:    #c4572b;
-  --terra-dk: #a83d1e;
+  --terra:    #bc5429;
+  --terra-dk: #a03a1d;
   --terra-bg: #fef3ee;
   --ink:      #1a1a2e;
   --bg:       #fafaf8;
@@ -225,11 +225,13 @@ main {
 }
 .step-card .sc-body { flex: 1; }
 .step-card .sc-title {
+  display: block;
   font-weight: 700;
   font-size: 1rem;
   line-height: 1.3;
 }
 .step-card .sc-hint {
+  display: block;
   font-size: .82rem;
   color: var(--muted);
   margin-top: .15rem;
@@ -324,7 +326,7 @@ main {
 }
 .checklist li:last-child { border-bottom: none; }
 .checklist li::before {
-  content: '☐';
+  content: '☐' / '';
   color: var(--terra);
   font-size: 1.1rem;
   flex-shrink: 0;
