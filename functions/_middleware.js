@@ -1,44 +1,62 @@
 /**
- * Cloudflare Pages Middleware
- * After CF Access authenticates a visitor, CF injects:
- *   CF-Access-Authenticated-User-Email: user@example.com
- * We use that to enroll the visitor in the Brevo list, then serve the page normally.
+ * Middleware — runs on every request.
+ * Public routes: /, /api/login  (the landing page and login endpoint)
+ * Everything else requires a valid signed session cookie.
  */
 export async function onRequest({ request, next, env }) {
-  const email = request.headers.get('CF-Access-Authenticated-User-Email');
+  const url = new URL(request.url);
 
-  if (email && env.BREVO_API_KEY && env.BREVO_LIST_ID) {
-    // Fire-and-forget — don't block page load on Brevo
-    subscribeToBrevo(email, env.BREVO_API_KEY, parseInt(env.BREVO_LIST_ID, 10)).catch(() => {});
+  // Always allow the landing page and the login POST
+  if (url.pathname === '/' || url.pathname === '/api/login') {
+    return next();
   }
 
-  return next();
+  // Check for a valid session cookie
+  const cookie = getCookie(request, 't401_session');
+  if (cookie && await verifySessionCookie(cookie, env.COOKIE_SECRET || 'fallback-secret')) {
+    return next();
+  }
+
+  // No valid session — redirect to landing page
+  return Response.redirect(new URL('/', request.url), 303);
 }
 
-async function subscribeToBrevo(email, apiKey, listId) {
-  // Try to create or update the contact
-  const body = JSON.stringify({
-    email,
-    listIds: [listId],
-    updateEnabled: true,   // if contact already exists, just add list
-  });
+// ── helpers ────────────────────────────────────────────────────────────────
 
-  const resp = await fetch('https://api.brevo.com/v3/contacts', {
-    method: 'POST',
-    headers: {
-      'api-key': apiKey,
-      'Content-Type': 'application/json',
-    },
-    body,
-  });
-
-  // 204 = created, 400 with code "duplicate_parameter" = already exists (also fine)
-  // Anything else we log but don't surface to the user
-  if (!resp.ok && resp.status !== 204) {
-    const txt = await resp.text();
-    // Only throw so the outer catch can silence it
-    if (!txt.includes('duplicate_parameter')) {
-      throw new Error(`Brevo ${resp.status}: ${txt.slice(0, 200)}`);
-    }
+function getCookie(request, name) {
+  const header = request.headers.get('Cookie') || '';
+  for (const part of header.split(';')) {
+    const [k, ...v] = part.trim().split('=');
+    if (k.trim() === name) return v.join('=').trim();
   }
+  return null;
+}
+
+async function verifySessionCookie(value, secret) {
+  try {
+    const [payload, sig] = value.split('.');
+    if (!payload || !sig) return false;
+
+    // Verify HMAC
+    const expected = await hmacSign(payload, secret);
+    if (sig !== expected) return false;
+
+    // Check expiry
+    const { exp } = JSON.parse(atob(payload));
+    return Date.now() < exp;
+  } catch (_) {
+    return false;
+  }
+}
+
+async function hmacSign(data, secret) {
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
+  return btoa(String.fromCharCode(...new Uint8Array(sig)));
 }
