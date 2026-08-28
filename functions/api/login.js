@@ -50,7 +50,11 @@ export async function onRequestPost({ request, env }) {
   }
 
   // Set signed session cookie and redirect to playbook
-  const cookie = await buildSessionCookie(email, env.COOKIE_SECRET || 'fallback-secret');
+  // Guard: COOKIE_SECRET must be set — no fallback, fail hard if missing
+  if (!env.COOKIE_SECRET) {
+    return new Response('Server configuration error', { status: 500 });
+  }
+  const cookie = await buildSessionCookie(email, env.COOKIE_SECRET);
   return new Response(null, {
     status: 303,
     headers: { Location: '/playbook', 'Set-Cookie': cookie },

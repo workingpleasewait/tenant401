@@ -13,7 +13,7 @@ export async function onRequest({ request, next, env }) {
 
   // Check for a valid session cookie
   const cookie = getCookie(request, 't401_session');
-  if (cookie && await verifySessionCookie(cookie, env.COOKIE_SECRET || 'fallback-secret')) {
+  if (cookie && env.COOKIE_SECRET && await verifySessionCookie(cookie, env.COOKIE_SECRET)) {
     return next();
   }
 
