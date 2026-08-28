@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resource Guide - Rent Reduction</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: "#C4572B",
+                            container: "#FAD8C3",
+                        },
+                        on: {
+                            primary: {
+                                DEFAULT: "#FFFFFF",
+                                container: "#3E1C0D",
+                            },
+                            surface: {
+                                DEFAULT: "#2B2826",
+                                variant: "#5F5C5A",
+                            }
+                        },
+                        surface: {
+                            DEFAULT: "#FAFAF8",
+                            variant: "#EFEBE8",
+                            container: {
+                                low: "#FFFFFF",
+                                DEFAULT: "#F5F2F0",
+                            }
+                        },
+                        sage: {
+                            DEFAULT: "#E8F0EA",
+                            dark: "#2A4531"
+                        }
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Public Sans", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col text-base">
+<!-- TopAppBar -->
+<header class="bg-surface font-body font-medium docked full-width top-0 shadow-sm flex items-center justify-between px-4 py-3 w-full border-b border-surface-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-2xl text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">apartment</span>
+<div>
+<h1 class="text-on-surface text-base font-medium leading-tight">205 East 17th Street</h1>
+<p class="text-on-surface-variant text-sm font-normal">Brooklyn, NY 11226</p>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center px-6 py-10 max-w-2xl mx-auto w-full">
+<!-- Hero Section -->
+<section class="text-center w-full mb-10">
+<h2 class="font-headline font-bold text-3xl md:text-4xl text-on-surface mb-4 leading-tight">Elevator Out of Service?<br/>You may be entitled to a rent reduction.</h2>
+<p class="font-body text-lg text-on-surface-variant max-w-md mx-auto leading-relaxed">
+                This guide has helped tenants at this building get a formal DHCR rent reduction order.
+            </p>
+</section>
+<!-- Process Steps -->
+<section class="w-full flex flex-col gap-4 mb-10">
+<!-- Step 1 -->
+<button class="w-full bg-surface-container-low rounded-xl p-5 flex items-center justify-between group hover:bg-surface-variant transition-colors duration-200 text-left border border-surface-variant shadow-sm">
+<div class="flex items-center gap-4">
+<div class="bg-primary text-on-primary font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">
+                        1
+                    </div>
+<span class="font-headline font-semibold text-lg text-on-surface group-hover:text-primary transition-colors">
+                        File a 311 Complaint
+                    </span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-2xl">chevron_right</span>
+</button>
+<!-- Step 2 -->
+<button class="w-full bg-surface-container-low rounded-xl p-5 flex items-center justify-between group hover:bg-surface-variant transition-colors duration-200 text-left border border-surface-variant shadow-sm">
+<div class="flex items-center gap-4">
+<div class="bg-primary text-on-primary font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">
+                        2
+                    </div>
+<span class="font-headline font-semibold text-lg text-on-surface group-hover:text-primary transition-colors">
+                        Notify Your Landlord
+                    </span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-2xl">chevron_right</span>
+</button>
+<!-- Step 3 -->
+<button class="w-full bg-surface-container-low rounded-xl p-5 flex items-center justify-between group hover:bg-surface-variant transition-colors duration-200 text-left border border-surface-variant shadow-sm">
+<div class="flex items-center gap-4">
+<div class="bg-primary text-on-primary font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">
+                        3
+                    </div>
+<span class="font-headline font-semibold text-lg text-on-surface group-hover:text-primary transition-colors">
+                        Apply for DHCR Rent Reduction
+                    </span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-2xl">chevron_right</span>
+</button>
+</section>
+<!-- Success Story Box -->
+<section class="w-full bg-sage rounded-xl p-5 flex items-start gap-4 shadow-sm border border-sage-dark/10">
+<span class="material-symbols-outlined text-sage-dark text-2xl shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">verified</span>
+<p class="font-body text-base text-sage-dark leading-relaxed">
+    A tenant here won — rent reduction effective August 2024. Docket MP 210039 B.
+</p>
+</section>
+</main>
+</body></html>

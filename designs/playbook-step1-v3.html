@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Step 1: File a 311 Complaint</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#C4572B",
+                        "on-primary": "#FFFFFF",
+                        "primary-container": "#F4DCD1",
+                        "on-primary-container": "#C4572B",
+                        "secondary": "#FEF3C7",
+                        "on-secondary": "#1E293B",
+                        "surface": "#FAFAF8",
+                        "on-surface": "#2d2d2d",
+                        "on-surface-variant": "#5a5a5a",
+                        "outline": "#E2E0DB"
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "body": ["Public Sans", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 10px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col pt-safe pb-safe selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 bg-surface z-40 flex items-center justify-between px-4 py-4 border-b border-outline">
+<!-- Brand -->
+<div class="font-display font-medium text-on-surface-variant text-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base">location_on</span>
+            205 East 17th Street
+        </div>
+<!-- Step Indicator -->
+<div class="font-display text-sm font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+            Step 1 of 3
+        </div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-4 py-8 md:px-6 md:py-10 md:max-w-xl md:mx-auto w-full pb-36">
+<!-- Header Section -->
+<div class="mb-10 text-center animate-fade-in-up">
+<div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white font-display font-bold text-2xl mb-5 shadow-sm">
+                1
+            </div>
+<h1 class="font-display font-bold text-3xl tracking-tight text-on-surface mb-3 leading-tight">
+                File a 311 Complaint
+            </h1>
+<p class="text-on-surface-variant text-[17px] leading-relaxed max-w-sm mx-auto">
+                This creates an official city record — the foundation of your case.
+            </p>
+</div>
+<!-- Action Items (Bento-style list) -->
+<div class="space-y-4 mb-10">
+<!-- Item 1: How to file -->
+<div class="bg-white rounded-xl p-5 flex items-start gap-4 border border-outline shadow-soft">
+<div class="shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-2xl">call</span>
+</div>
+<div class="flex-1">
+<h3 class="font-display font-bold text-lg text-on-surface mb-1">How to file</h3>
+<p class="text-on-surface-variant text-[16px] leading-relaxed">
+                        Go to <a class="text-primary font-semibold hover:underline" href="#">311.nyc.gov</a> or call <span class="font-semibold text-on-surface">311</span>
+</p>
+</div>
+</div>
+<!-- Item 2: What to say -->
+<div class="bg-white rounded-xl p-5 flex items-start gap-4 border border-outline shadow-soft">
+<div class="shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-2xl">record_voice_over</span>
+</div>
+<div class="flex-1">
+<h3 class="font-display font-bold text-lg text-on-surface mb-1">What to say</h3>
+<p class="text-on-surface-variant text-[16px] leading-relaxed">
+                        Say: <span class="font-medium text-on-surface">"Elevator not functioning properly"</span> or <span class="font-medium text-on-surface">"Unsafe elevator conditions"</span>
+</p>
+</div>
+</div>
+<!-- Item 3: What to save (High Importance) -->
+<div class="bg-primary rounded-xl p-5 flex items-start gap-4 shadow-soft">
+<div class="shrink-0 mt-0.5 text-white">
+<span class="material-symbols-outlined filled text-2xl">error</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="font-display font-bold text-lg text-white uppercase tracking-wider text-sm">Important</h3>
+</div>
+<p class="text-white/95 text-[16px] leading-relaxed font-medium">
+                        Save your Service Request (SR) number — you'll attach it to your DHCR filing.
+                    </p>
+</div>
+</div>
+<!-- Tip Callout -->
+<div class="bg-[#FEF3C7] rounded-xl p-5 shadow-soft flex gap-4 items-start border border-[#FDE68A]">
+<div class="shrink-0 mt-0.5 text-[#B45309]">
+<span class="material-symbols-outlined filled text-2xl">lightbulb</span>
+</div>
+<div>
+<h4 class="font-display font-bold text-[#92400E] text-base mb-1">Tip</h4>
+<p class="text-[#92400E]/90 text-[16px] leading-relaxed">
+                    File a new 311 complaint every time the elevator breaks again — each report strengthens your case.
+                </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (JSON Driven Structure) -->
+<nav class="fixed bottom-0 left-0 w-full px-4 pb-safe bg-surface/95 backdrop-blur-sm border-t border-outline z-50 pt-4 pb-6 md:pb-4">
+<div class="flex flex-col gap-3 max-w-xl mx-auto w-full">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-white rounded-xl py-4 px-6 font-display text-[17px] font-bold hover:bg-primary/90 active:scale-[0.98] transition-all shadow-sm" type="button">
+            Next: Notify Your Landlord
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="w-full flex items-center justify-center gap-2 bg-transparent text-primary border border-primary rounded-xl py-3.5 px-6 font-display text-[17px] font-bold hover:bg-primary/5 active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined">arrow_back</span>
+            Back to Overview
+        </button>
+</div>
+</nav>
+<!-- Simple CSS animation for entrance -->
+<style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        
+        /* Safe area padding for mobile devices */
+        .pt-safe { padding-top: env(safe-area-inset-top); }
+        .pb-safe { padding-bottom: calc(env(safe-area-inset-bottom) + 1rem); }
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .pb-safe {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    </style>
+</body></html>

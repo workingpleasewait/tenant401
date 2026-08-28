@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html class="antialiased font-sans" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tenant Guide - 205 East 17th Street</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#FAFAF8',
+                        primary: '#C4572B',
+                        'primary-light': '#E8A38B',
+                        secondary: '#4A5568',
+                        text: '#2D3748',
+                        'text-light': '#718096',
+                        success: '#38A169',
+                        'success-bg': '#E6F4EA',
+                        border: '#E2E8F0',
+                        surface: '#FFFFFF',
+                        'surface-variant': '#F1F5F9',
+                        'on-surface': '#1A202C',
+                        'on-surface-variant': '#4A5568',
+                        'outline': '#CBD5E1',
+                        'outline-variant': '#E2E8F0',
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Public Sans", "sans-serif"]
+                    },
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-text font-body min-h-screen flex flex-col pt-16">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 w-full bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant z-50">
+<div class="flex items-center justify-between px-6 py-4 w-full h-16">
+<button aria-label="Go back" class="flex items-center justify-center p-2 -ml-2 rounded-full hover:bg-surface-variant/50 transition-colors active:scale-95 duration-150 text-primary dark:text-primary">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline text-headline-sm font-bold tracking-tight text-primary dark:text-primary flex-1 text-center truncate px-4">
+                Tenant401
+            </h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</div>
+</header>
+<main class="flex-1 overflow-y-auto w-full max-w-md mx-auto relative px-4 pb-8">
+<!-- Header Section -->
+<section class="mt-8 mb-8 text-center space-y-4">
+<div class="inline-flex items-center justify-center w-16 h-16 bg-surface shadow-sm rounded-full mb-2">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="location_city">location_city</span>
+</div>
+<div>
+<h2 class="font-headline text-2xl font-bold text-text">205 East 17th Street</h2>
+<p class="text-text-light mt-1">Brooklyn, NY 11226</p>
+</div>
+<div class="inline-flex items-center space-x-2 bg-surface px-4 py-2 rounded-full shadow-sm border border-border mt-4">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="language">language</span>
+<span class="font-label text-sm font-medium text-secondary">Guide en français</span>
+</div>
+</section>
+<!-- Main Content -->
+<section class="space-y-6">
+<!-- Headline & Subtitle -->
+<div class="bg-surface p-6 rounded-2xl shadow-sm border border-border">
+<h3 class="font-headline text-xl font-bold text-primary mb-3 leading-tight">
+                    Ascenseur en panne ? Vous avez peut-être droit à une réduction de loyer.
+                </h3>
+<p class="text-base text-secondary leading-relaxed">
+                    Ce guide a aidé des locataires de cet immeuble à obtenir un arrêté officiel de réduction de loyer de la DHCR.
+                </p>
+</div>
+<!-- Step Cards -->
+<div class="space-y-4">
+<!-- Step 1 -->
+<a class="block bg-surface p-5 rounded-2xl shadow-sm border border-border hover:border-primary/50 hover:shadow-md transition-all group active:scale-[0.98]" href="#">
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 w-10 h-10 bg-primary text-surface rounded-full flex items-center justify-center font-bold text-lg font-headline">
+                            1
+                        </div>
+<div class="flex-1">
+<p class="font-medium text-text text-base group-hover:text-primary transition-colors">Déposer une plainte auprès du 311</p>
+</div>
+<span class="material-symbols-outlined text-text-light group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+<!-- Step 2 -->
+<a class="block bg-surface p-5 rounded-2xl shadow-sm border border-border hover:border-primary/50 hover:shadow-md transition-all group active:scale-[0.98]" href="#">
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 w-10 h-10 bg-primary text-surface rounded-full flex items-center justify-center font-bold text-lg font-headline">
+                            2
+                        </div>
+<div class="flex-1">
+<p class="font-medium text-text text-base group-hover:text-primary transition-colors">Notifier le propriétaire par courrier recommandé</p>
+</div>
+<span class="material-symbols-outlined text-text-light group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+<!-- Step 3 -->
+<a class="block bg-surface p-5 rounded-2xl shadow-sm border border-border hover:border-primary/50 hover:shadow-md transition-all group active:scale-[0.98]" href="#">
+<div class="flex items-center gap-4">
+<div class="flex-shrink-0 w-10 h-10 bg-primary text-surface rounded-full flex items-center justify-center font-bold text-lg font-headline">
+                            3
+                        </div>
+<div class="flex-1">
+<p class="font-medium text-text text-base group-hover:text-primary transition-colors">Demander une réduction de loyer — Formulaire DHCR RA-84</p>
+</div>
+<span class="material-symbols-outlined text-text-light group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</a>
+</div>
+<!-- Success Callout -->
+<div class="bg-success-bg p-5 rounded-2xl flex items-start gap-4 mt-8 border border-success/20">
+<span class="material-symbols-outlined text-success mt-0.5" data-icon="check_circle" data-weight="fill">check_circle</span>
+<div>
+<p class="text-sm font-medium text-success mb-1">Succès prouvé</p>
+<p class="text-sm text-secondary leading-relaxed">
+                        Un locataire de cet immeuble a gagné — réduction de loyer effective en août 2024. Dossier n° MP 210039 B.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Footer Note -->
+<footer class="mt-12 text-center">
+<p class="text-xs text-text-light font-label">
+                Ce guide est disponible en anglais · This guide is available in English
+            </p>
+</footer>
+</main>
+<script>
+        // Simple interaction for the back button
+        document.querySelector('header button').addEventListener('click', () => {
+            console.log('Back navigation clicked');
+            // Logic for navigating back would go here
+        });
+    </script>
+</body></html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Step 3: Apply for a Rent Reduction</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "primary": "#C4572B",
+          "on-primary": "#ffffff",
+          "primary-container": "#FFDBCF",
+          "on-primary-container": "#3A0A00",
+          "surface": "#FAFAF8",
+          "on-surface": "#1F1B19",
+          "surface-variant": "#F2DFD8",
+          "on-surface-variant": "#53433E",
+          "outline": "#85736D",
+          "outline-variant": "#D8C2BB",
+          "secondary": "#77574D",
+          "secondary-container": "#FFDBCF",
+          "tertiary": "#6B5E2F",
+          "sage": "#E6EDE8",
+          "on-sage": "#2C3D32",
+          "mint": "#E8F5ED",
+          "on-mint": "#1A402D"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "2xl": "1rem",
+                "full": "9999px"
+        },
+        "fontFamily": {
+                "headline": ["Inter", "sans-serif"],
+                "display": ["Inter", "sans-serif"],
+                "body": ["Inter", "sans-serif"],
+                "label": ["Public Sans", "sans-serif"]
+        }
+      },
+    },
+  }
+</script>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col pt-16 pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-surface border-b border-outline-variant flat no shadows transition-colors duration-200">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-xl">arrow_back</span>
+<div class="flex items-center gap-1 text-sm text-on-surface-variant font-label">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>205 East 17th Street</span>
+</div>
+</div>
+<div>
+<span class="bg-primary-container text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider font-label">Step 3 of 3</span>
+</div>
+</header>
+<main class="flex-grow px-4 py-6 max-w-md mx-auto w-full">
+<!-- Header Section -->
+<div class="mb-8">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary text-2xl font-bold font-display mb-4">
+                3
+            </div>
+<h1 class="font-headline text-2xl font-bold text-on-surface mb-3 leading-tight">Apply for Rent Reduction — DHCR Form RA-84</h1>
+<p class="font-body text-on-surface-variant text-base leading-relaxed">
+                Mail the form with all attachments. DHCR will inspect and issue an order.
+            </p>
+</div>
+<!-- Cards Container -->
+<div class="space-y-4">
+<!-- Checklist Card -->
+<div class="bg-white rounded-2xl p-5 border border-outline-variant shadow-sm">
+<h2 class="font-headline font-semibold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">assignment</span>
+                    What to attach
+                </h2>
+<div class="space-y-3 font-body text-sm">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline mt-0.5 flex-shrink-0 group-hover:border-primary transition-colors"></div>
+<span class="text-on-surface">Signed RA-84 form</span>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline mt-0.5 flex-shrink-0 group-hover:border-primary transition-colors"></div>
+<span class="text-on-surface">Copy of certified letter to landlord</span>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline mt-0.5 flex-shrink-0 group-hover:border-primary transition-colors"></div>
+<span class="text-on-surface">Certified mail receipt</span>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline mt-0.5 flex-shrink-0 group-hover:border-primary transition-colors"></div>
+<span class="text-on-surface">311 Service Request number</span>
+</label>
+</div>
+</div>
+<!-- Mail Address Card -->
+<div class="bg-sage rounded-2xl p-5 border border-[#c8d9ce] shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-3 opacity-10">
+<span class="material-symbols-outlined text-6xl">mark_email_read</span>
+</div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold tracking-widest text-on-sage uppercase font-label">Mail To</span>
+<button class="flex items-center gap-1 text-xs font-medium text-on-sage hover:opacity-80 transition-opacity bg-white/50 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+                            Copy
+                        </button>
+</div>
+<p class="font-body text-sm text-on-sage font-medium leading-relaxed max-w-[85%]">
+                        DHCR – Rent Administration Office,<br/>
+                        Gertz Plaza, 92-31 Union Hall Street,<br/>
+                        6th Floor, Jamaica, NY 11433
+                    </p>
+</div>
+</div>
+<!-- Timeline Card -->
+<div class="bg-white rounded-2xl p-5 border border-outline-variant shadow-sm flex gap-4 items-start">
+<span class="material-symbols-outlined text-primary text-2xl flex-shrink-0" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<p class="font-body text-sm text-on-surface leading-relaxed">
+<strong class="font-semibold block mb-1">Expect 5–9 months.</strong>
+                    DHCR will schedule an inspection of your building.
+                </p>
+</div>
+<!-- Result Callout Card -->
+<div class="bg-mint rounded-2xl p-5 border border-[#bce3cc] shadow-sm flex gap-4 items-start">
+<span class="material-symbols-outlined text-[#2E7D32] text-2xl flex-shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<p class="font-body text-sm text-on-mint leading-relaxed">
+<strong class="font-semibold block mb-1">A tenant at this building won:</strong>
+                    Rent reduction effective August 1, 2024.<br/>
+<span class="text-xs opacity-80 mt-1 block font-mono">Docket: MP 210039 B</span>
+</p>
+</div>
+<!-- Download Link -->
+<div class="pt-2 pb-4 text-center">
+<a class="inline-flex items-center gap-1 text-primary font-medium font-body hover:underline text-sm" href="#">
+                    Download Form RA-84
+                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<div class="text-xs text-on-surface-variant mt-1 opacity-70">hcr.ny.gov/form-ra-84</div>
+</div>
+</div>
+</main>
+<!-- Bottom Actions -->
+<div class="fixed bottom-0 w-full z-50 px-4 py-4 bg-surface/95 backdrop-blur-sm border-t border-outline-variant">
+<div class="max-w-md mx-auto space-y-3">
+<button class="w-full flex flex-row items-center justify-center gap-2 bg-primary text-on-primary rounded-xl px-6 py-3.5 font-label font-semibold hover:opacity-90 active:scale-95 transition-all shadow-md">
+<span class="material-symbols-outlined text-[20px]">check</span>
+                All done — you've filed!
+            </button>
+<button class="w-full flex flex-row items-center justify-center gap-2 text-primary border-2 border-primary rounded-xl px-6 py-3 font-label font-semibold hover:bg-primary-container/30 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                Back: Notify Landlord
+            </button>
+</div>
+</div>
+</body></html>
