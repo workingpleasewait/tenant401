@@ -15,7 +15,8 @@
 
   if (!isTest) {
     posthog.init('phc_uY5md7SXZ4go2PMD53CAk2Z5SzjH59rpiMTQ9oRT8Man', {
-      api_host: 'https://us.i.posthog.com',
+      api_host: 'https://a.tenant401.com',
+      ui_host: 'https://us.posthog.com',
       autocapture: false,
       capture_pageview: false,
       capture_pageleave: false,
