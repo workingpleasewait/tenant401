@@ -11,7 +11,7 @@
   try { isTest = isTest || sessionStorage.getItem('t401_test_mode') === '1'; } catch(e) {}
 
   if (!isTest) {
-    posthog.init('phc_uY5md7SXOeMdNmMPiDi8rkp14ioLWGViqitHfvWLfhR', {
+    posthog.init('phc_uY5md7SXZ4go2PMD53CAk2Z5SzjH59rpiMTQ9oRT8Man', {
       api_host: 'https://us.i.posthog.com',
       autocapture: false,
       capture_pageview: false,
