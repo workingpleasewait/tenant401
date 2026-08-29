@@ -1,0 +1,25 @@
+name: Analytics canary
+
+# Tenant401 deploys via `wrangler pages deploy` from a local terminal, not
+# from GitHub Actions, so this canary cannot auto-trigger on deploy.
+# Run it manually after any deploy that touches analytics code.
+on:
+  workflow_dispatch: {}
+
+jobs:
+  canary:
+    name: Verify PostHog pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run PostHog canary
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          POSTHOG_PERSONAL_KEY: ${{ secrets.POSTHOG_PERSONAL_KEY }}
+        run: python3 scripts/posthog-canary.py
