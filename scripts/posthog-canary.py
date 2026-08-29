@@ -22,7 +22,7 @@ import urllib.request
 from datetime import timezone, datetime
 
 PROJECT_ID = 544341
-CAPTURE_URL = 'https://a.tenant401.com/i/v0/e'   # via first-party proxy
+CAPTURE_URL = 'https://us.i.posthog.com/i/v0/e'   # direct — proxy blocks non-browser requests
 QUERY_URL = f'https://us.posthog.com/api/projects/{PROJECT_ID}/query/'
 POLL_INTERVAL = 30   # seconds between readback polls
 MAX_WAIT = 300       # 5 minutes total
