@@ -46,9 +46,9 @@ def log(msg):
 def query_event_count(personal_key, host, window_hours):
     q = (
         f"SELECT count() FROM events "
-        f"WHERE properties.\\$host = '{host}' "
-        f"AND properties.is_test IS NULL OR properties.is_test = false "
+        f"WHERE properties.$host = '{host}' "
         f"AND event != 'analytics_canary' "
+        f"AND (properties.is_test IS NULL OR properties.is_test = false) "
         f"AND timestamp >= now() - interval {window_hours} hour"
     )
     payload = json.dumps({'query': {'kind': 'HogQLQuery', 'query': q}}).encode()
